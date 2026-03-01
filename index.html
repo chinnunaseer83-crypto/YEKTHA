@@ -7,22 +7,22 @@
   <style>
     :root {
       --primary: #1a1a1a;
-      --accent: #e67e22;
-      --bg: #f8f9fa;
-      --card-bg: #ffffff;
+      --bg: #f2f2f2;
+      --white: #ffffff;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       margin: 0;
       background: var(--bg);
       color: #333;
     }
 
+    /* Sticky Header */
     header {
       background: #000;
       color: white;
-      padding: 20px 15px;
+      padding: 15px;
       text-align: center;
       position: sticky;
       top: 0;
@@ -30,51 +30,43 @@
     }
 
     h1 {
-      margin: 0 0 15px 0;
-      font-size: 1.8rem;
-      letter-spacing: 3px;
+      margin: 0 0 10px 0;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
     .search-bar {
       width: 100%;
       max-width: 400px;
-      padding: 12px 20px;
-      border-radius: 25px;
+      padding: 10px 15px;
+      border-radius: 20px;
       border: none;
       font-size: 0.9rem;
       outline: none;
-      box-sizing: border-box;
     }
 
-    /* Professional Category Scroller */
+    /* Categories Horizontal Scroller */
     .cat-container {
       background: #fff;
       padding: 10px 0;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 115px; /* Adjust based on header height */
-      z-index: 999;
+      border-bottom: 1px solid #ddd;
       overflow-x: auto;
       white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
       display: flex;
-      justify-content: flex-start;
       gap: 10px;
       padding-left: 15px;
     }
-
     .cat-container::-webkit-scrollbar { display: none; }
 
     .cat-btn {
-      padding: 8px 20px;
-      border: 1px solid #ddd;
+      padding: 7px 18px;
+      border: 1px solid #ccc;
       background: #fff;
       border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     .cat-btn.active {
@@ -83,87 +75,133 @@
       border-color: #000;
     }
 
+    /* Product Grid */
     .container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 15px auto;
       padding: 0 10px;
     }
 
-    /* 2-Column Grid for Mobile */
     main {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 10px;
     }
 
     @media (min-width: 768px) {
-      main { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-      .cat-container { justify-content: center; }
+      main { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
     }
 
+    /* Product Card */
     .card {
-      background: var(--card-bg);
-      border-radius: 12px;
+      background: var(--white);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       display: flex;
       flex-direction: column;
-      border: 1px solid #f0f0f0;
+      border: 1px solid #eee;
+      cursor: pointer;
     }
 
     .card img {
       width: 100%;
       aspect-ratio: 1/1;
       object-fit: cover;
-      background: #f9f9f9;
     }
 
     .info {
-      padding: 10px;
+      padding: 8px 8px 4px 8px; /* Bottom padding കുറച്ചു */
       flex-grow: 1;
-      text-align: left;
     }
 
     .info h4 {
       margin: 0 0 2px 0;
-      font-size: 0.9rem;
-      color: #222;
-      height: 1.2em; /* Limits to 2 lines */
+      font-size: 0.85rem;
+      color: #333;
+      line-height: 1.2;
+      height: 2.4em;
       overflow: hidden;
     }
 
     .price {
-      font-weight: 700;
+      font-weight: 800;
       font-size: 1rem;
       color: #000;
       display: block;
-      margin-top: 0;
-      margin-bottom: 4px;
+      margin: 0;
     }
 
     .rating {
       color: #f1c40f;
-      font-size: 0.7rem;
-      margin-bottom: 8px;
+      font-size: 0.65rem;
+      margin: 2px 0 5px 0; /* ബട്ടണുമായുള്ള ഗ്യാപ്പ് ഇവിടെ കുറച്ചു (5px) */
     }
 
     .buy-btn {
       background: #000;
-      color: white;
+      color: #fff;
       border: none;
-      padding: 10px 5px;
+      padding: 10px;
+      font-size: 0.75rem;
+      font-weight: bold;
       width: 100%;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
+      margin-top: 0;
     }
 
-    #loading { grid-column: 1 / -1; text-align: center; padding: 50px; font-size: 0.9rem; color: #888; }
+    /* Modal Style */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: #fff;
+      margin: 15% auto;
+      width: 85%;
+      max-width: 400px;
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 15px; top: 10px;
+      font-size: 28px;
+      color: #000;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    .modal-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+    .modal-info { padding: 15px; text-align: left; }
+    .modal-info h2 { font-size: 1.2rem; margin: 0 0 5px 0; }
+    .modal-info .price { font-size: 1.4rem; margin-bottom: 2px; }
+    .modal-info .rating { margin-bottom: 10px; font-size: 0.8rem; }
+    
+    .modal-buy-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -173,13 +211,26 @@
   <input type="text" id="search" placeholder="Search products..." class="search-bar">
 </header>
 
-<div class="cat-container" id="categories">
-  </div>
+<div class="cat-container" id="categories"></div>
 
 <div class="container">
   <main id="products-grid">
-    <div id="loading">Loading products...</div>
+    <div id="loading" style="grid-column: 1/-1; text-align: center; padding: 50px;">Loading products...</div>
   </main>
+</div>
+
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <img id="modalImg" class="modal-img" src="">
+    <div class="modal-info">
+      <h2 id="modalName"></h2>
+      <span id="modalPrice" class="price"></span>
+      <div id="modalRating" class="rating"></div>
+      <p id="modalCat" style="color: #777; font-size: 0.75rem; margin-bottom: 15px;"></p>
+      <button id="modalBuyBtn" class="modal-buy-btn">ORDER ON WHATSAPP</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -207,34 +258,28 @@
       setupCategories();
       displayProducts(allProducts);
     } catch (error) {
-      document.getElementById('products-grid').innerHTML = `<p style="grid-column:1/-1; text-align:center;">Error loading shop!</p>`;
+      document.getElementById('products-grid').innerHTML = "<p>Error loading items.</p>";
     }
   }
 
   function displayProducts(products) {
     const grid = document.getElementById('products-grid');
-    grid.innerHTML = products.length ? products.map(p => `
-      <div class="card">
-        <img src="${p.photo}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/250?text=No+Image'">
+    grid.innerHTML = products.map(p => `
+      <div class="card" onclick="openModal('${p.name.replace(/'/g, "\\'")}', '${p.price}', '${p.rating}', '${p.photo}', '${p.category}')">
+        <img src="${p.photo}" loading="lazy">
         <div class="info">
           <h4>${p.name}</h4>
           <span class="price">₹${p.price}</span>
           <div class="rating">${p.rating}</div>
         </div>
-        <button class="buy-btn" onclick="order('${p.name}')">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.973L0 16l5.053-1.326A7.817 7.817 0 0 0 7.998 16c4.369 0 7.926-3.559 7.93-7.93a7.856 7.856 0 0 0-2.327-5.744z"/>
-          </svg>
-          ORDER
-        </button>
+        <button class="buy-btn">ORDER</button>
       </div>
-    `).join('') : "<p style='grid-column:1/-1; text-align:center;'>No items found.</p>";
+    `).join('');
   }
 
   function setupCategories() {
     const categoriesDiv = document.getElementById('categories');
     const uniqueCats = ['All', ...new Set(allProducts.map(p => p.category))];
-    
     categoriesDiv.innerHTML = uniqueCats.map(c => `
       <button class="cat-btn ${c==='All'?'active':''}" onclick="filter('${c}', this)">${c}</button>
     `).join('');
@@ -247,9 +292,27 @@
     displayProducts(filtered);
   }
 
+  function openModal(name, price, rating, photo, cat) {
+    document.getElementById('modalName').innerText = name;
+    document.getElementById('modalPrice').innerText = '₹' + price;
+    document.getElementById('modalRating').innerText = rating;
+    document.getElementById('modalImg').src = photo;
+    document.getElementById('modalCat').innerText = 'Category: ' + cat;
+    document.getElementById('modalBuyBtn').onclick = (e) => { e.stopPropagation(); order(name); };
+    document.getElementById('productModal').style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == document.getElementById('productModal')) closeModal();
+  }
+
   function order(name) {
     const wpNumber = "7594069256";
-    const message = encodeURIComponent(`Hello Yektha! I want to buy: ${name}.`);
+    const message = encodeURIComponent(`Hello Yektha! I am interested in: ${name}.`);
     window.open(`https://wa.me/${wpNumber}?text=${message}`, "_blank");
   }
 
@@ -263,4 +326,3 @@
 
 </body>
 </html>
-
