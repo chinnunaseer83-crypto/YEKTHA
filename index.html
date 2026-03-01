@@ -39,18 +39,42 @@
     h1 { 
       margin: 0; 
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem; 
-      letter-spacing: 5px;
+      font-size: 1.8rem; 
+      letter-spacing: 8px;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--accent);
+      display: flex;
+      justify-content: center;
     }
-
+    h1 span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: revealLetter 0.8s forwards;
+    }
+    h1 span:nth-child(1) { animation-delay: 0.1s; }
+    h1 span:nth-child(2) { animation-delay: 0.2s; }
+    h1 span:nth-child(3) { animation-delay: 0.3s; }
+    h1 span:nth-child(4) { animation-delay: 0.4s; }
+    h1 span:nth-child(5) { animation-delay: 0.5s; }
+    h1 span:nth-child(6) { animation-delay: 0.6s; }
+    
+    @keyframes revealLetter {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     .brand-line {
-      width: 30px;
+      width: 0;
       height: 1.5px;
       background: var(--accent);
       margin: 5px auto 12px auto;
+      animation: growLine 1s ease-out forwards;
+      animation-delay: 0.8s;
+    }
+    @keyframes growLine {
+      to { width: 40px; }
     }
 
     .search-bar {
@@ -232,7 +256,9 @@
 <body>
 
 <header>
-  <h1>Yektha</h1>
+  <h1>
+  <span>Y</span><span>E</span><span>K</span><span>T</span><span>H</span><span>A</span>
+</h1>
   <div class="brand-line"></div>
   <input type="text" id="search" placeholder="Search curated products..." class="search-bar">
 </header>
@@ -354,5 +380,6 @@
 
 </body>
 </html>
+
 
 
